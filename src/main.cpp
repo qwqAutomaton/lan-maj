@@ -11,6 +11,7 @@ int main()
     for (auto i : pile)
     {
         cnt++;
+        std::cout << Game::CardGenerator::toString(i);
         if (cnt == 17)
         {
             std::cout << std::endl;

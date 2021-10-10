@@ -94,7 +94,7 @@ namespace Game
                 break;
             }
             sout << "] ";
-            return sout;
+            return sout.str();
         }
     }
 }
