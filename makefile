@@ -11,4 +11,5 @@ src/bin/main.o: src/main.cpp
 
 .PHONY: clear
 clear:
-	-rm -rf src/bin/*
+	-rm -rf src/bin
+	mkdir src/bin

@@ -1,12 +1,22 @@
 #include <iostream>
-#include "asio.hpp"
+#include "data.hpp"
+
 int main()
 {
-    asio::io_context io_context;
-    std::cout << "QAQ" << std::endl;
-    asio::steady_timer timer(io_context, asio::chrono::seconds(5));
-    timer.wait();
-    std::cout << "QwQ" << std::endl;
+    Game::CardGenerator::initStandardPile();
+    auto pile = Game::CardGenerator::shuffle();
+    std::cout << "Shuffled." << std::endl;
+    std::cout << "Pile.len: " << pile.size() << std::endl;
+    int cnt = 0;
+    for (auto i : pile)
+    {
+        cnt++;
+        if (cnt == 17)
+        {
+            std::cout << std::endl;
+            cnt = 0;
+        }
+    }
+    std::cout << std::endl;
     return 0;
 }
-
