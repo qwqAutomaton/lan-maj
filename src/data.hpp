@@ -8,8 +8,8 @@ namespace Game
 {
     namespace Random
     {
-        std::random_device rd;
-        std::mt19937 rng(rd());
+        extern std::random_device rd;
+        extern std::mt19937 rng;
     }
     using Random::rng;
     namespace CardGenerator
@@ -29,72 +29,45 @@ namespace Game
             Card(int index = 0, CardType type = none)
                 : index(index), type(type) {}
         };
-        std::vector<Card> standardPile;
-        void initStandardPile()
+        extern std::vector<Card> standardPile;
+        std::string toString(Card);
+        std::vector<Card> shuffle();
+        void initStandardPile();
+        namespace Test
         {
-            standardPile.clear();
-            for (int i = 1; i <= 9; i++)
-                for (int j = 1; j <= 4; j++)
-                {
-                    standardPile.emplace_back(i, T);
-                    standardPile.emplace_back(i, W);
-                    standardPile.emplace_back(i, S);
-                }
-            for (int i = 1; i <= 7; i++)
-                for (int j = 1; j <= 4; j++)
-                    standardPile.emplace_back(i, Special);
-        }
-        std::vector<Card> shuffle()
-        {
-            std::vector<Card> res(standardPile);
-            std::shuffle(res.begin(), res.end(), rng);
-            return res;
-        }
-        std::string toString(Card i)
-        {
-            std::string s = "";
-            std::stringstream sout(s);
-            sout << "[";
-            switch (i.type)
+            enum CardType
             {
-            case Game::CardGenerator::T:
-                sout << "O-" << i.index;
-                break;
-            case Game::CardGenerator::W:
-                sout << "W-" << i.index;
-                break;
-            case Game::CardGenerator::S:
-                sout << "I-" << i.index;
-                break;
-            case Game::CardGenerator::Special:
-                switch (i.index)
-                {
-                case 1:
-                    sout << "Est";
-                    break;
-                case 2:
-                    sout << "Sth";
-                    break;
-                case 3:
-                    sout << "Wst";
-                    break;
-                case 4:
-                    sout << "Nth";
-                    break;
-                case 5:
-                    sout << "Mid";
-                    break;
-                case 6:
-                    sout << "Blk";
-                    break;
-                case 7:
-                    sout << "Fah";
-                    break;
-                }
-                break;
-            }
-            sout << "] ";
-            return sout.str();
+                Speciel,
+                T,
+                W,
+                S,
+                none
+            };
+            class Card
+            {
+            private:
+                int _index;
+                CardType _type;
+
+            public:
+                Card(int index = 0, CardType type = none)
+                    : _index(index), _type(type) {}
+                std::string toString();
+                inline const int index() const;
+                inline const CardType type() const;
+                inline void index(int);
+                inline void type(CardType);
+            };
+            class CardPile
+            {
+            private:
+                static std::vector<Card> standardPile;
+                std::vector<Card> _pile;
+            public:
+                CardPile();
+                void shuffle();
+                
+            };
         }
     }
 }
